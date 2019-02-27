@@ -1,0 +1,19 @@
+# Install-specific and caches
+/Local
+/Index
+/Backup
+/Cache
+/Lib
+
+# Sublime packages except for User
+/Packages/*
+!/Packages/User
+
+# Package Control files/directories
+/Packages/User/Package\ Control.cache
+/Packages/User/Package\ Control.last-run
+/Packages/User/Package\ Control.merged-ca-bundle
+/Packages/User/Package\ Control.user-ca-bundle
+
+# Specific other files
+/Packages/User/oscrypto-ca-bundle.crt
