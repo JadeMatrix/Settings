@@ -1,0 +1,18 @@
+// These settings override both User and Default settings for the Haskell syntax
+{
+    "font_face": "Fira Code",
+    "font_options": [
+        "dlig",
+        // "gray_antialias",
+        "ss01",
+        "ss02",
+        "ss03",
+        "ss04",
+        "ss05",
+        "ss06",
+        "ss07",
+        "ss08",
+        "ss09",
+        "ss10"
+    ]
+}

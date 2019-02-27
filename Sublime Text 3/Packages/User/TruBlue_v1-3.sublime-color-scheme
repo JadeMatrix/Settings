@@ -1,0 +1,233 @@
+{
+    "name"      : "TruBlu v1.3 Dark",
+    "author"    : "Joseph Durel [jadematrix.art@gmail.com]",
+    "variables" : {
+        "foreground"     : "#a8cae4",  // light blue-grey
+        "background"     : "#163850",  // dark blue-grey
+        "special"        : "#3293d8",  // bright blue
+        "out_of_band"    : "#b98d00",  // gold
+        "literal"        : "#ffffff",  // white
+        "line_highlight" : "#1d547c",  // pale blue-grey
+        "invisible"      : "#274962",  // very pale blue-grey
+        "selection_bg"   : "#413100",  // dark gold
+        "attention"      : "#bb00ff",  // reasonably bright purple
+        "attention_max"  : "#ff0000"   // bright red
+    },
+    "globals"   : {
+        "foreground"       : "var( foreground     )",
+        "background"       : "var( background     )",
+        "caret"            : "var( literal        )",
+        "invisibles"       : "var( invisible      )",
+        "line_highlight"   : "var( line_highlight )",
+        "selection"        : "var( selection_bg   )",
+        "selection_border" : "var( out_of_band    )",
+        "misspelling"      : "var( attention_max  )"
+        // active_guide
+        // find_highlight_foreground
+        // find_highlight
+        // brackets_options
+        // brackets_foreground
+        // bracket_contents_options
+        // bracket_contents_foreground
+        // tags_options
+    },
+    "rules"     : [
+        
+        // General /////////////////////////////////////////////////////////////
+        
+        {
+            "name"       : "Literal",
+            "scope"      : "string, constant.numeric, constant",
+            "foreground" : "var( literal )"
+        },
+        {
+            "name"       : "Literal string escape sequence",
+            "scope"      : "constant.character.escape",
+            "foreground" : "var( special )"
+        },
+        {
+            "name"       : "Keyword",
+            "scope"      : "keyword, variable.language, storage.type",
+            "foreground" : "var( special )"
+        },
+        {
+            "name"       : "Storage",
+            "scope"      : "storage",
+            "foreground" : "var( special )"
+        },
+        {
+            "name"       : "Tag name",
+            "scope"      : "entity.name.tag",
+            "foreground" : "var( special )"
+        },
+        {
+            "name"       : "Tag attribute",
+            "scope"      : "entity.other.attribute-name",
+            "foreground" : "var( foreground )"
+        },
+        {
+            "name"       : "Comment",
+            "scope"      : "comment",
+            "foreground" : "var( out_of_band )",
+            "font_style" : "italic"
+        },
+        {
+            "name"       : "Comment keyword",
+            "scope"      : "keyword.comment",
+            "foreground" : "var( attention_max )",
+            "font_style" : "bold italic"
+        },
+        // {
+        //     "name"       : "Continuation mark",
+        //     "scope"      : "continuation",
+        //     "foreground" : "var( special )"
+        // },
+        {
+            "name"       : "Invalid",
+            "scope"      : "invalid",
+            "background" : "var( attention_max )"
+        },
+        {
+            "name"       : "Deprecated",
+            "scope"      : "invalid.deprecated",
+            "background" : "var( attention )"
+        },
+        
+        // Language-specific overrides /////////////////////////////////////////
+        
+        // Plain text
+        {
+            "name"       : "Plain text",
+            "scope"      : "text.plain",
+            "foreground" : "var( out_of_band )"
+        },
+        
+        // C/C++/etc.
+        {
+            "name"       : "Include string",
+            "scope"      : "string.quoted.double.include, string.quoted.other.lt-gt.include",
+            "foreground" : "var( foreground )"
+        },
+        {
+            "name"       : "Preprocessor statement",
+            "scope"      : "meta.preprocessor, keyword.control.import",
+            "foreground" : "var( special )"
+        },
+        {
+            "name"       : "C++ keywords",
+            "scope"      : "storage.modifier.c++, operator.meta.method.c++",
+            "foreground" : "var( special )"
+        },
+        
+        // Python
+        {
+            "name"       : "Python 3 type annotation punctuation",
+            "scope"      : "punctuation.separator.annotation",
+            "foreground" : "var( special )"
+        },
+        {
+            "name"       : "Python format string placeholders",
+            "scope"      : "constant.other.placeholder.python, variable.other.placeholder.python",
+            "foreground" : "var( foreground )"
+        },
+        
+        // PHP
+        {
+            "name"       : "PHP doc comment keyword",
+            "scope"      : "todo.keyword.other.phpdoc.php",
+            "foreground" : "var( attention_max )",  // Optionally #800000
+            "font_style" : "bold italic"
+        },
+        
+        // Makefile
+        {
+            "name"       : "Makefile recipe",
+            "scope"      : "entity.name.function.makefile",
+            "foreground" : "var( special )"
+        },
+        
+        // Diff
+        {
+            "name"       : "Diff deleted punctuation",
+            "scope"      : "punctuation.definition.deleted.diff",
+            "foreground" : "var( attention_max )"
+        },
+        {
+            "name"       : "Diff inserted punctuation",
+            "scope"      : "punctuation.definition.inserted.diff",
+            "foreground" : "var( special )"
+        },
+        {
+            "name"       : "Diff range",
+            "scope"      : "meta.diff.range",
+            "foreground" : "var( literal )"
+        },
+        {
+            "name"       : "Diff separator",
+            "scope"      : "punctuation.definition.separator.diff",
+            "foreground" : "var( literal )"
+        },
+        // {
+        //     "name": "Diff deleted",
+        //     "scope": "markup.deleted",
+        //     "foreground": "var(red2)"
+        // },
+        // {
+        //     "name": "Diff inserted",
+        //     "scope": "markup.inserted",
+        //     "foreground": "var(yellow2)"
+        // },
+        // {
+        //     "name": "Diff changed",
+        //     "scope": "markup.changed",
+        //     "foreground": "var(yellow)"
+        // },
+        
+        // Jinja2
+        {
+            "name"       : "Jinja2 delimiters",
+            "scope"      : "entity.other.jinja2.delimiter",
+            "foreground" : "var( special )"
+        },
+        {
+            "name"       : "Jinja2 comment delimiters",
+            "scope"      : "entity.other.jinja2.delimiter.comment",
+            "foreground" : "var( out_of_band )"
+        },
+        
+        // SQL
+        {
+            // The default SQL language definition is dumb
+            "name"       : "SQL database/table name",
+            "scope"      : "constant.other.database-name.sql, constant.other.table-name.sql",
+            "foreground" : "var( foreground )"
+        },
+        
+        // CMake
+        {
+            "name"       : "CMake string substitution",
+            "scope"      : "meta.text-substitution.cmake",
+            "foreground" : "var( foreground )"
+        },
+        {
+            "name"       : "asdf",
+            "scope"      : "support.function.cmake",
+            "foreground" : "var( foreground )"
+        }
+        
+        // Notes ///////////////////////////////////////////////////////////////
+        
+        // "color(var(white) alpha(0.67))"
+        // "bold italic"
+        // "scope": "text & (punctuation.definition.italic | punctuation.definition.bold | punctuation.definition.raw | punctuation.definition.link | punctuation.definition.metadata | punctuation.definition.image | punctuation.separator.table-cell | punctuation.section.table-header | punctuation.definition.constant)",
+        
+        // {
+        //     "scope": "constant.numeric.line-number.find-in-files - match",
+        //     "foreground": "color(var(purple) alpha(0.63))"
+        // },
+        // {
+        //     "scope": "message.error",
+        //     "foreground": "var(red)"
+        // }
+    ]
+}

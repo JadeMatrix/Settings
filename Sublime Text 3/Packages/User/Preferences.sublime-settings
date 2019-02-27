@@ -1,0 +1,33 @@
+{
+	"always_show_minimap_viewport": true,
+	"auto_indent": true,
+	"close_windows_when_empty": false,
+	"color_scheme": "Packages/User/TruBlue_v1-3.sublime-color-scheme",
+	"detect_indentation": true,
+	"draw_minimap_border": true,
+	"draw_white_space": "all",
+	"font_face": "SF Mono",
+	"font_size": 11,
+	"ignored_packages":
+	[
+		"ApacheConf.tmLanguage",
+		"Dockerfile Syntax Highlighting",
+		"Vintage"
+	],
+	"indent_to_bracket": false,
+	"open_files_in_new_window": false,
+	"rulers":
+	[
+		80,
+		160
+	],
+	"scroll_past_end": true,
+	"scroll_speed": 0,
+	"smart_indent": true,
+	"tab_size": 4,
+	"theme": "Adaptive.sublime-theme",
+	"translate_tabs_to_spaces": true,
+	"trim_automatic_white_space": false,
+	"use_tab_stops": true,
+	"word_wrap": false
+}
