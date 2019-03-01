@@ -1,0 +1,13 @@
+[
+    { "keys" : [ "ctrl+q" ], "command" : "noop" },
+    { "keys" : [ "ctrl+alt+q" ], "command" : "exit" },
+    {
+        "keys" : [ "ctrl+shift+backquote" ],
+        "command" : "show_panel",
+        "args" : {
+            "panel" : "console",
+            "toggle" : true
+        }
+    },
+    { "keys" : [ "ctrl+shift+o" ], "command" : "prompt_open_folder" }
+]
