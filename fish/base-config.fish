@@ -49,7 +49,14 @@ function linecount
     wc -l (find $argv -type f)
 end
 
+function pless
+    # unbuffer $argv 2>&1 | less -r
+    unbuffer $argv | less -r
+end
+
 alias extglob='shopt -s extglob'
+
+alias hgmt='hg merge -t internal:merge'
 
 # Fun stuff
 alias shrug='echo -n "¯\_(ツ)_/¯" | cb'
