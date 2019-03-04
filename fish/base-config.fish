@@ -11,10 +11,9 @@ switch (uname)
         alias numthreads='sysctl -n hw.logicalcpu'
     
     case Linux
-        # alias cb='xclip'
         function cb
             # xclip is available and can execute (X is running)
-            if type -q xclip and xclip -o 2>/dev/null | xclip -i 2>/dev/null
+            if type -q xclip and xclip -o 2>/dev/null
                 xclip $argv
             else
                 tee $argv
@@ -35,16 +34,10 @@ switch (uname)
 end
 
 alias lah='ls -lah'
-# function lah
-#     ls -lah $argv
-# end
+alias mmake='make -j (numthreads)'
+alias extglob='shopt -s extglob'
+alias hgmt='hg merge -t internal:merge'
 
-function mmake
-    make -j (numthreads) $argv
-end
-
-# alias lc='wc -l `find ./ -type f`'
-# function linecount { wc -l `find "$@" -type f`; }
 function linecount
     wc -l (find $argv -type f)
 end
@@ -55,10 +48,6 @@ function pless
     # less -r ( $argv 2>&1 | psub -f )
     unbuffer fish -c (string escape -- $argv) | less -r
 end
-
-alias extglob='shopt -s extglob'
-
-alias hgmt='hg merge -t internal:merge'
 
 # Fun stuff
 alias shrug='echo -n "¯\_(ツ)_/¯" | cb'
