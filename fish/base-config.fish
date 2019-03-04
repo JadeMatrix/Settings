@@ -51,7 +51,9 @@ end
 
 function pless
     # unbuffer $argv 2>&1 | less -r
-    unbuffer $argv | less -r
+    # unbuffer $argv | less -r
+    # less -r ( $argv 2>&1 | psub -f )
+    unbuffer fish -c (string escape -- $argv) | less -r
 end
 
 alias extglob='shopt -s extglob'
