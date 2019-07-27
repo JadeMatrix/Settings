@@ -37,7 +37,7 @@
         
         {
             "name"       : "Literal",
-            "scope"      : "string, constant.numeric, constant",
+            "scope"      : "( punctuation.definition.string | string | constant.numeric | constant ) - meta.preprocessor",
             "foreground" : "var( literal )"
         },
         {

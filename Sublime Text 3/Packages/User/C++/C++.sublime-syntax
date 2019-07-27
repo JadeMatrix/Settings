@@ -20,9 +20,9 @@ file_extensions:
 first_line_match: '-\*- C\+\+ -\*-'
 scope: source.c++
 variables:
-  identifier: '\b[[:alpha:]_][[:alnum:]_]*\b'
+  identifier: \b[[:alpha:]_][[:alnum:]_]*\b # upper and lowercase
+  macro_identifier: \b[[:upper:]_][[:upper:][:digit:]_]{2,}\b # only uppercase, at least 3 chars
   path_lookahead: '(?:::\s*)?(?:{{identifier}}\s*::\s*)*(?:template\s+)?{{identifier}}'
-  macro_identifier: '\b[[:upper:]_][[:upper:][:digit:]_]*\b'
   operator_method_name: '\boperator\s*(?:[-+*/%^&|~!=<>]|[-+*/%^&|=!<>]=|<<=?|>>=?|&&|\|\||\+\+|--|,|->\*?|\(\)|\[\]|""\s*{{identifier}})'
   casts: 'const_cast|dynamic_cast|reinterpret_cast|static_cast'
   operator_keywords: 'and|and_eq|bitand|bitor|compl|not|not_eq|or|or_eq|xor|xor_eq|noexcept'
@@ -35,10 +35,18 @@ variables:
   type_qualifier: 'const|constexpr|mutable|typename|volatile'
   compiler_directive: 'inline|restrict|__restrict__|__restrict'
   visibility_modifiers: 'private|protected|public'
-  other_keywords: 'typedef|decltype|nullptr|{{visibility_modifiers}}|static_assert|sizeof|using|typeid|alignof|alignas|namespace|template'
+  other_keywords: 'typedef|nullptr|{{visibility_modifiers}}|static_assert|sizeof|using|typeid|alignof|alignas|namespace|template'
   modifiers: '{{storage_classes}}|{{type_qualifier}}|{{compiler_directive}}'
   non_angle_brackets: '(?=<<|<=)'
-  generic_lookahead: '<(?:\s*(?:{{path_lookahead}}|\d+)(?:{{path_lookahead}}|&(?!&)|\*|,|\.|<.*?>|\s|\d)*)?>'
+
+  regular: '[^(){}&;*^%=<>-]*'
+  paren_open: (?:\(
+  paren_close: '\))?'
+  generic_open: (?:<
+  generic_close: '>)?'
+  balance_parentheses: '{{regular}}{{paren_open}}{{regular}}{{paren_close}}{{regular}}'
+  generic_lookahead: <{{regular}}{{generic_open}}{{regular}}{{generic_open}}{{regular}}{{generic_close}}\s*{{generic_close}}{{balance_parentheses}}>
+
   data_structures_forward_decl_lookahead: '(\s+{{macro_identifier}})*\s*(:\s*({{path_lookahead}}|{{visibility_modifiers}}|,|\s|<[^;]*>)+)?;'
   non_func_keywords: 'if|for|switch|while|decltype|sizeof|__declspec|__attribute__|typeid|alignof|alignas|static_assert'
 
@@ -87,6 +95,16 @@ contexts:
   unique-keywords:
     - match: \busing\b
       scope: keyword.control.c++
+    - match: \bbreak\b
+      scope: keyword.control.flow.break.c++
+    - match: \bcontinue\b
+      scope: keyword.control.flow.continue.c++
+    - match: \bgoto\b
+      scope: keyword.control.flow.goto.c++
+    - match: \breturn\b
+      scope: keyword.control.flow.return.c++
+    - match: \bthrow\b
+      scope: keyword.control.flow.throw.c++
     - match: \b({{control_keywords}})\b
       scope: keyword.control.c++
     - match: '\bdelete\b(\s*\[\])?|\bnew\b(?!])'
@@ -101,6 +119,24 @@ contexts:
       scope: storage.type.c++
 
   unique-strings:
+    - match: '((?:L|u8|u|U)?R)("(PG?SQL)\()'
+      captures:
+        1: storage.type.string.c++
+        2: punctuation.definition.string.begin.c++
+      push:
+        - include: scope:source.pgsql
+        - match: '\)\3"'
+          scope: punctuation.definition.string.end.c++
+          pop: true
+    - match: '((?:L|u8|u|U)?R)("(SQL)\()'
+      captures:
+        1: storage.type.string.c++
+        2: punctuation.definition.string.begin.c++
+      push:
+        - include: scope:source.sql
+        - match: '\)\3"'
+          scope: punctuation.definition.string.end.c++
+          pop: true
     - match: '((?:L|u8|u|U)?R)("([^\(\)\\ ]{0,16})\()'
       captures:
         1: storage.type.string.c++
@@ -174,6 +210,18 @@ contexts:
     - include: keywords-angle-brackets
     - match: '(?={{path_lookahead}}\s*<)'
       push: global-modifier
+    # Take care of comments just before a function definition.
+    - match: /\*
+      scope: punctuation.definition.comment.c
+      push:
+        - - match: \s*(?=\w)
+            set: global-modifier
+          - match: ""
+            pop: true
+        - - meta_scope: comment.block.c
+          - match: \*/
+            scope: punctuation.definition.comment.c
+            pop: true
     - include: early-expressions
     - match: ^\s*\b(extern)(?=\s+"C(\+\+)?")
       scope: storage.modifier.c++
@@ -201,13 +249,13 @@ contexts:
             - include: global
         - match: (?=\S)
           set: global-modifier
-    - match: '^\s*(?=\w+)'
+    - match: ^\s*(?=\w)
       push: global-modifier
     - include: late-expressions
 
   statements:
     - include: preprocessor-statements
-    - include: Packages/User/C++/C.sublime-syntax#label
+    - include: scope:source.c#label
     - include: expressions
 
   expressions:
@@ -284,39 +332,39 @@ contexts:
       scope: punctuation.terminator.c++
 
   comments:
-    - include: Packages/User/C++/C.sublime-syntax#comments
+    - include: scope:source.c#comments
 
   operators:
-    - include: Packages/User/C++/C.sublime-syntax#operators
+    - include: scope:source.c#operators
 
   modifiers:
     - include: unique-modifiers
-    - include: Packages/User/C++/C.sublime-syntax#modifiers
+    - include: scope:source.c#modifiers
 
   variables:
     - include: unique-variables
-    - include: Packages/User/C++/C.sublime-syntax#variables
+    - include: scope:source.c#variables
 
   constants:
     - include: unique-constants
-    - include: Packages/User/C++/C.sublime-syntax#constants
+    - include: scope:source.c#constants
 
   keywords:
     - include: unique-keywords
-    - include: Packages/User/C++/C.sublime-syntax#keywords
+    - include: scope:source.c#keywords
 
   types:
     - include: unique-types
     - include: types-parens
-    - include: Packages/User/C++/C.sublime-syntax#types
+    - include: scope:source.c#types
 
   strings:
     - include: unique-strings
-    - include: Packages/User/C++/C.sublime-syntax#strings
+    - include: scope:source.c#strings
 
   numbers:
     - include: unique-numbers
-    - include: Packages/User/C++/C.sublime-syntax#numbers
+    - include: scope:source.c#numbers
 
   ## C++-specific contexts
 
@@ -572,7 +620,7 @@ contexts:
     - match: (?={{path_lookahead}}\s*\()
       push:
         - meta_scope: meta.function-call.c++
-        - include: Packages/User/C++/C.sublime-syntax#c99
+        - include: scope:source.c#c99
         - match: '(?:(::)\s*)?{{identifier}}\s*(::)\s*'
           scope: variable.function.c++
           captures:
@@ -621,6 +669,13 @@ contexts:
               pop: true
         - match: (?=\S) # safety pop
           pop: true
+    # Operator overloading
+    - match: '({{operator_method_name}})\s*(\()'
+      captures:
+        0: meta.method-call.c++
+        1: variable.function.member.c++
+        2: meta.group.c++ punctuation.section.group.begin.c++
+      set: members-inside-function-call
     # Non-templated member function call
     - match: (~?{{identifier}})\s*(\()
       captures:
@@ -661,7 +716,7 @@ contexts:
       pop: true
 
   members-dot:
-    - include: Packages/User/C++/C.sublime-syntax#access-illegal
+    - include: scope:source.c#access-illegal
     # No lookahead required because members-dot goes after operators in the
     # early-expressions-after-generic-type context. This means triple dots
     # (i.e. "..." or "variadic") is attempted first.
@@ -765,6 +820,7 @@ contexts:
         - match: '~{{identifier}}'
         - match: '(?=[^\w\s])'
           set: function-definition-params
+    - include: unique-strings
     - match: '(?=\S)'
       set: global-type
 
@@ -845,9 +901,9 @@ contexts:
     # All uppercase identifier just before a newline is most likely a macro
     - match: '[[:upper:][:digit:]_]+\s*$'
     # Operator overloading
-    - match: '(?=({{path_lookahead}}\s*::\s*)?{{operator_method_name}}\s*(\(|$))'
+    - match: '(?=({{path_lookahead}}\s*(?:{{generic_lookahead}})?::\s*)?{{operator_method_name}}\s*(\(|$))'
       set:
-        - meta_content_scope: meta.function.c++ entity.name.function.c++ operator.meta.method.c++
+        - meta_content_scope: meta.function.c++ entity.name.function.c++
         - include: identifiers
         - match: '(?=\s*(\(|$))'
           set: function-definition-params
@@ -914,9 +970,9 @@ contexts:
                 - match: '(?=,|\))'
                   pop: true
                 - include: expressions-minus-generic-type
-                - include: Packages/User/C++/C.sublime-syntax#preprocessor-line-continuation
+                - include: scope:source.c#preprocessor-line-continuation
             - include: expressions-minus-generic-type
-            - include: Packages/User/C++/C.sublime-syntax#preprocessor-line-continuation
+            - include: scope:source.c#preprocessor-line-continuation
     - match: (?=\S)
       pop: true
 
@@ -1120,6 +1176,8 @@ contexts:
 
   data-structures-definition-common-end:
     - include: angle-brackets
+    - match: \bfinal\b
+      scope: storage.modifier.c++
     - match: ':'
       scope: punctuation.separator.c++
       push:
@@ -1289,7 +1347,7 @@ contexts:
     - include: modifiers
     # Operator overloading
     - match: '{{operator_method_name}}(?=\s*(\(|$))'
-      scope: meta.method.c++ entity.name.function.c++ operator.meta.method.c++
+      scope: meta.method.c++ entity.name.function.c++
       set: method-definition-params
     # Identifier that is not the function name - likely a macro or type
     - match: '(?={{path_lookahead}}([ \t]+|[*&])(?!\s*(<|::|\()))'
@@ -1334,7 +1392,7 @@ contexts:
           set:
             - meta_content_scope: meta.method.parameters.c++ meta.group.c++
             - match : \)
-              scope: meta.group.c++ punctuation.section.group.end.c++
+              scope: punctuation.section.group.end.c++
               set: method-definition-continue
             - match: '\bvoid\b'
               scope: storage.type.c++
@@ -1430,7 +1488,7 @@ contexts:
   preprocessor-data-structures:
     - include: preprocessor-rule-enabled-data-structures
     - include: preprocessor-rule-disabled-data-structures
-    - include: Packages/User/C++/C.sublime-syntax#preprocessor-practical-workarounds
+    - include: preprocessor-practical-workarounds
 
   preprocessor-rule-disabled-data-structures:
     - match: ^\s*((#if)\s+(0))\b
@@ -1456,7 +1514,7 @@ contexts:
             - meta_scope: comment.block.preprocessor.if-branch.c++
             - match: (?=^\s*#\s*(else|endif)\b)
               pop: true
-            - include: Packages/User/C++/C.sublime-syntax#preprocessor-disabled
+            - include: scope:source.c#preprocessor-disabled
 
   preprocessor-rule-enabled-data-structures:
     - match: ^\s*((#if)\s+(0*1))\b
@@ -1476,7 +1534,7 @@ contexts:
             - meta_content_scope: comment.block.preprocessor.else-branch.c++
             - match: (?=^\s*#\s*endif\b)
               pop: true
-            - include: Packages/User/C++/C.sublime-syntax#preprocessor-disabled
+            - include: scope:source.c#preprocessor-disabled
         - match: ""
           push:
             - match: (?=^\s*#\s*(else|endif)\b)
@@ -1497,9 +1555,9 @@ contexts:
     - include: preprocessor-rule-other-statements
 
   preprocessor-expressions:
-    - include: Packages/User/C++/C.sublime-syntax#incomplete-inc
+    - include: scope:source.c#incomplete-inc
     - include: preprocessor-macro-define
-    - include: Packages/User/C++/C.sublime-syntax#pragma-mark
+    - include: scope:source.c#pragma-mark
     - include: preprocessor-other
 
   preprocessor-rule-disabled-global:
@@ -1527,7 +1585,7 @@ contexts:
             - meta_scope: comment.block.preprocessor.if-branch.c++
             - match: (?=^\s*#\s*(else|endif)\b)
               pop: true
-            - include: Packages/User/C++/C.sublime-syntax#preprocessor-disabled
+            - include: scope:source.c#preprocessor-disabled
 
   preprocessor-rule-enabled-global:
     - match: ^\s*((#if)\s+(0*1))\b
@@ -1547,7 +1605,7 @@ contexts:
             - meta_content_scope: comment.block.preprocessor.else-branch.c++
             - match: (?=^\s*#\s*endif\b)
               pop: true
-            - include: Packages/User/C++/C.sublime-syntax#preprocessor-disabled
+            - include: scope:source.c#preprocessor-disabled
         - match: ""
           push:
             - match: (?=^\s*#\s*(else|endif)\b)
@@ -1562,8 +1620,8 @@ contexts:
         1: keyword.control.import.c++
       push:
         - meta_scope: meta.preprocessor.c++
-        - include: Packages/User/C++/C.sublime-syntax#preprocessor-line-continuation
-        - include: Packages/User/C++/C.sublime-syntax#preprocessor-comments
+        - include: scope:source.c#preprocessor-line-continuation
+        - include: scope:source.c#preprocessor-comments
         - match: \bdefined\b
           scope: keyword.control.c++
         # Enter a new scope where all elif/else branches have their
@@ -1658,7 +1716,7 @@ contexts:
             - meta_scope: comment.block.preprocessor.if-branch.c++
             - match: (?=^\s*#\s*(else|endif)\b)
               pop: true
-            - include: Packages/User/C++/C.sublime-syntax#preprocessor-disabled
+            - include: scope:source.c#preprocessor-disabled
 
   preprocessor-rule-enabled-statements:
     - match: ^\s*((#if)\s+(0*1))\b
@@ -1678,7 +1736,7 @@ contexts:
             - meta_content_scope: comment.block.preprocessor.else-branch.c++
             - match: (?=^\s*#\s*endif\b)
               pop: true
-            - include: Packages/User/C++/C.sublime-syntax#preprocessor-disabled
+            - include: scope:source.c#preprocessor-disabled
         - match: ""
           push:
             - match: (?=^\s*#\s*(else|endif)\b)
@@ -1692,8 +1750,8 @@ contexts:
         1: keyword.control.import.c++
       push:
         - meta_scope: meta.preprocessor.c++
-        - include: Packages/User/C++/C.sublime-syntax#preprocessor-line-continuation
-        - include: Packages/User/C++/C.sublime-syntax#preprocessor-comments
+        - include: scope:source.c#preprocessor-line-continuation
+        - include: scope:source.c#preprocessor-comments
         - match: \bdefined\b
           scope: keyword.control.c++
         # Enter a new scope where all elif/else branches have their
@@ -1724,7 +1782,7 @@ contexts:
 
   preprocessor-if-branch-function-call:
     - meta_content_scope: meta.function-call.c++
-    - include: Packages/User/C++/C.sublime-syntax#c99
+    - include: scope:source.c#c99
     - match: '(?:(::)\s*)?{{identifier}}\s*(::)\s*'
       scope: variable.function.c++
       captures:
@@ -1819,9 +1877,9 @@ contexts:
         1: meta.preprocessor.macro.c++ keyword.control.import.define.c++
       push:
         - meta_content_scope: meta.preprocessor.macro.c++
-        - include: Packages/User/C++/C.sublime-syntax#preprocessor-line-continuation
-        - include: Packages/User/C++/C.sublime-syntax#preprocessor-line-ending
-        - include: Packages/User/C++/C.sublime-syntax#preprocessor-comments
+        - include: scope:source.c#preprocessor-line-continuation
+        - include: scope:source.c#preprocessor-line-ending
+        - include: scope:source.c#preprocessor-comments
         - match: '({{identifier}})(?=\()'
           scope: entity.name.function.preprocessor.c++
           set:
@@ -1845,8 +1903,8 @@ contexts:
         - match: '{{identifier}}'
           scope: variable.parameter.c++
           pop: true
-        - include: Packages/User/C++/C.sublime-syntax#preprocessor-line-continuation
-        - include: Packages/User/C++/C.sublime-syntax#preprocessor-comments
+        - include: scope:source.c#preprocessor-line-continuation
+        - include: scope:source.c#preprocessor-comments
         - match: '\.\.\.'
           scope: keyword.operator.variadic.c++
         - match: '(?=\))'
@@ -1858,8 +1916,8 @@ contexts:
             2: punctuation.definition.comment.c++
         - match: '\S+'
           scope: invalid.illegal.unexpected-character.c++
-    - include: Packages/User/C++/C.sublime-syntax#preprocessor-line-continuation
-    - include: Packages/User/C++/C.sublime-syntax#preprocessor-comments
+    - include: scope:source.c#preprocessor-line-continuation
+    - include: scope:source.c#preprocessor-comments
     - match: '\.\.\.'
       scope: keyword.operator.variadic.c++
     - match: (/\*).*(\*/)
@@ -1872,9 +1930,9 @@ contexts:
 
   preprocessor-macro-definition:
     - meta_content_scope: meta.preprocessor.macro.c++
-    - include: Packages/User/C++/C.sublime-syntax#preprocessor-line-continuation
-    - include: Packages/User/C++/C.sublime-syntax#preprocessor-line-ending
-    - include: Packages/User/C++/C.sublime-syntax#preprocessor-comments
+    - include: scope:source.c#preprocessor-line-continuation
+    - include: scope:source.c#preprocessor-line-ending
+    - include: scope:source.c#preprocessor-comments
     # Don't define blocks in define statements
     - match: '\{'
       scope: punctuation.section.block.begin.c++
@@ -1882,15 +1940,32 @@ contexts:
       scope: punctuation.section.block.end.c++
     - include: expressions
 
+  preprocessor-practical-workarounds:
+    - include: preprocessor-convention-ignore-uppercase-ident-lines
+    - include: scope:source.c#preprocessor-convention-ignore-uppercase-calls-without-semicolon
+
+  preprocessor-convention-ignore-uppercase-ident-lines:
+    - match: ^(\s*{{macro_identifier}})+\s*$
+      scope: meta.assumed-macro.c++
+      push:
+        # It's possible that we are dealing with a function return type on its own line, and the
+        # name of the function is on the subsequent line.
+        - match: '(?={{path_lookahead}}({{generic_lookahead}}({{path_lookahead}})?)\s*\()'
+          set: [function-definition-params, global-function-identifier-generic]
+        - match: '(?={{path_lookahead}}\s*\()'
+          set: [function-definition-params, global-function-identifier]
+        - match: ^
+          pop: true
+
   preprocessor-other:
     - match: ^\s*(#\s*(?:if|ifdef|ifndef|elif|else|line|pragma|undef))\b
       captures:
         1: keyword.control.import.c++
       push:
         - meta_scope: meta.preprocessor.c++
-        - include: Packages/User/C++/C.sublime-syntax#preprocessor-line-continuation
-        - include: Packages/User/C++/C.sublime-syntax#preprocessor-line-ending
-        - include: Packages/User/C++/C.sublime-syntax#preprocessor-comments
+        - include: scope:source.c#preprocessor-line-continuation
+        - include: scope:source.c#preprocessor-line-ending
+        - include: scope:source.c#preprocessor-comments
         - match: \bdefined\b
           scope: keyword.control.c++
     - match: ^\s*(#\s*endif)\b
@@ -1901,9 +1976,9 @@ contexts:
         1: keyword.control.import.error.c++
       push:
         - meta_scope: meta.preprocessor.diagnostic.c++
-        - include: Packages/User/C++/C.sublime-syntax#preprocessor-line-continuation
-        - include: Packages/User/C++/C.sublime-syntax#preprocessor-line-ending
-        - include: Packages/User/C++/C.sublime-syntax#preprocessor-comments
+        - include: scope:source.c#preprocessor-line-continuation
+        - include: scope:source.c#preprocessor-line-ending
+        - include: scope:source.c#preprocessor-comments
         - include: strings
         - match: '\S+'
           scope: string.unquoted.c++
@@ -1912,9 +1987,9 @@ contexts:
         1: keyword.control.import.include.c++
       push:
         - meta_scope: meta.preprocessor.include.c++
-        - include: Packages/User/C++/C.sublime-syntax#preprocessor-line-continuation
-        - include: Packages/User/C++/C.sublime-syntax#preprocessor-line-ending
-        - include: Packages/User/C++/C.sublime-syntax#preprocessor-comments
+        - include: scope:source.c#preprocessor-line-continuation
+        - include: scope:source.c#preprocessor-line-ending
+        - include: scope:source.c#preprocessor-comments
         - match: '"'
           scope: punctuation.definition.string.begin.c++
           push:
@@ -1929,4 +2004,4 @@ contexts:
             - match: '>'
               scope: punctuation.definition.string.end.c++
               pop: true
-    - include: Packages/User/C++/C.sublime-syntax#preprocessor-practical-workarounds
+    - include: preprocessor-practical-workarounds
