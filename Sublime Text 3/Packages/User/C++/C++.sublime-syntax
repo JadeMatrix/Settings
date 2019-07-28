@@ -119,6 +119,22 @@ contexts:
       scope: storage.type.c++
 
   unique-strings:
+    - match: '\b(PG?SQL\s*\()'
+      captures:
+        1: punctuation.definition.string.begin.c++
+      push:
+        - include: scope:source.pgsql
+        - match: '\)'
+          scope: punctuation.definition.string.end.c++
+          pop: true
+    - match: '\b(SQL\s*\()'
+      captures:
+        1: punctuation.definition.string.begin.c++
+      push:
+        - include: scope:source.sql
+        - match: '\)'
+          scope: punctuation.definition.string.end.c++
+          pop: true
     - match: '((?:L|u8|u|U)?R)("(PG?SQL)\()'
       captures:
         1: storage.type.string.c++
