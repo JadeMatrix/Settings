@@ -27,6 +27,16 @@ switch (uname)
         # alias numthreads='grep -c ^processor /proc/cpuinfo'
         alias numthreads='nproc'
     
+    case FreeBSD
+        alias cb='tee'
+        function numthreads
+            sysctl -n hw.ncpu
+        end
+        function numcores
+            set smp_active (string replace -r '^.+: ' '' -- (sysctl kern.smp.active))
+            math (numthreads) / \($smp_active + 1\)
+        end
+    
     case '*'
         alias cb='tee'
         alias numcores='echo 1'
