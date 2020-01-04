@@ -72,6 +72,11 @@ begin
     alias g++we="g++ $CPP_EXTRA_WARNINGS_CLANG -Werror"
 end
 
+function mkin
+    mkdir $argv
+    cd $argv[-1]
+end
+
 function linecount
     wc -l (find $argv -type f)
 end
