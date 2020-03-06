@@ -9,5 +9,7 @@
             "toggle" : true
         }
     },
-    { "keys" : [ "ctrl+shift+o" ], "command" : "prompt_open_folder" }
+    { "keys" : [ "ctrl+shift+o" ], "command" : "prompt_open_folder" },
+    { "keys" : [ "alt+enter" ], "command" : "next_result" },
+    { "keys" : [ "shift+alt+enter" ], "command" : "pref_result" }
 ]
