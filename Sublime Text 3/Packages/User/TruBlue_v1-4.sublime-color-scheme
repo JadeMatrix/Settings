@@ -209,10 +209,12 @@
             "scope"      : "meta.text-substitution.cmake",
             "foreground" : "var( foreground )"
         },
+        
+        // MATLAB
         {
-            "name"       : "asdf",
-            "scope"      : "support.function.cmake",
-            "foreground" : "var( foreground )"
+            "name"       : "MATLAB line continuation",
+            "scope"      : "punctuation.separator.continuation.matlab",
+            "foreground" : "var( special )"
         }
         
         // Notes ///////////////////////////////////////////////////////////////
