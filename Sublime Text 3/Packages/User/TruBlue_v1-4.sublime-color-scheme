@@ -158,6 +158,16 @@
             "foreground" : "var( special )"
         },
         {
+            "name"       : "Diff deleted content",
+            "scope"      : "markup.deleted.diff",
+            "foreground" : "var( out_of_band )"
+        },
+        {
+            "name"       : "Diff inserted content",
+            "scope"      : "markup.inserted.diff",
+            "foreground" : "var( special )"
+        },
+        {
             "name"       : "Diff range",
             "scope"      : "meta.diff.range",
             "foreground" : "var( literal )"
@@ -167,21 +177,6 @@
             "scope"      : "punctuation.definition.separator.diff",
             "foreground" : "var( literal )"
         },
-        // {
-        //     "name": "Diff deleted",
-        //     "scope": "markup.deleted",
-        //     "foreground": "var(red2)"
-        // },
-        // {
-        //     "name": "Diff inserted",
-        //     "scope": "markup.inserted",
-        //     "foreground": "var(yellow2)"
-        // },
-        // {
-        //     "name": "Diff changed",
-        //     "scope": "markup.changed",
-        //     "foreground": "var(yellow)"
-        // },
         
         // Jinja2
         {
