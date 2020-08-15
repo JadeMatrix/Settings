@@ -44,9 +44,11 @@ switch (uname)
 end
 
 alias lah='ls -lah'
+alias sudoe='sudo -E'
 alias mmake='make -j (numthreads)'
 alias extglob='shopt -s extglob'
 alias hgmt='hg merge -t internal:merge'
+alias gitt='git log --oneline --graph'
 
 switch (uname)
     case Darwin Linux FreeBSD
