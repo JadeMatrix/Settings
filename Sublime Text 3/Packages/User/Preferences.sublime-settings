@@ -29,5 +29,6 @@
 	"translate_tabs_to_spaces": true,
 	"trim_automatic_white_space": false,
 	"use_tab_stops": true,
-	"word_wrap": false
+	"word_wrap": false,
+	"wrap_width": 80
 }
