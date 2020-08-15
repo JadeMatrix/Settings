@@ -210,6 +210,108 @@
             "name"       : "MATLAB line continuation",
             "scope"      : "punctuation.separator.continuation.matlab",
             "foreground" : "var( special )"
+        },
+        
+        // CMake
+        {
+            "name"       : "CMake ADD_SUBDIRECTORY",
+            "scope"      : "support.function.add_subdirectory.cmake",
+            "foreground" : "var( special )"
+        },
+        {
+            "name"       : "CMake CMAKE_MINIMUM_REQUIRED",
+            "scope"      : "support.function.cmake_minimum_required.cmake",
+            "foreground" : "var( special )"
+        },
+        {
+            "name"       : "CMake EXPORT",
+            "scope"      : "support.function.export.cmake",
+            "foreground" : "var( special )"
+        },
+        {
+            "name"       : "CMake FIND_PACKAGE",
+            "scope"      : "support.function.find_package.cmake",
+            "foreground" : "var( special )"
+        },
+        {
+            "name"       : "CMake INSTALL",
+            "scope"      : "support.function.install.cmake",
+            "foreground" : "var( special )"
+        },
+        {
+            "name"       : "CMake LIST",
+            "scope"      : "support.function.list.cmake",
+            "foreground" : "var( special )"
+        },
+        {
+            "name"       : "CMake MARK_AS_ADVANCED",
+            "scope"      : "support.function.mark_as_advanced.cmake",
+            "foreground" : "var( special )"
+        },
+        {
+            "name"       : "CMake MESSAGE",
+            "scope"      : "support.function.message.cmake",
+            "foreground" : "var( special )"
+        },
+        {
+            "name"       : "CMake OPTION",
+            "scope"      : "support.function.option.cmake",
+            "foreground" : "var( special )"
+        },
+        {
+            "name"       : "CMake PROJECT",
+            "scope"      : "support.function.project.cmake",
+            "foreground" : "var( special )"
+        },
+        {
+            "name"       : "CMake RETURN",
+            "scope"      : "support.function.return.cmake",
+            "foreground" : "var( special )"
+        },
+        {
+            "name"       : "CMake SET",
+            "scope"      : "support.function.set.cmake",
+            "foreground" : "var( special )"
+        },
+        {
+            "name"       : "CMake STRING",
+            "scope"      : "support.function.string.cmake",
+            "foreground" : "var( special )"
+        },
+        {
+            "name"       : "CMake TARGET_COMPILE_OPTIONS",
+            "scope"      : "support.function.target_compile_options.cmake",
+            "foreground" : "var( special )"
+        },
+        {
+            "name"       : "CMake TARGET_INCLUDE_DIRECTORIES",
+            "scope"      : "support.function.target_include_directories.cmake",
+            "foreground" : "var( special )"
+        },
+        {
+            "name"       : "CMake TARGET_LINK_LIBRARIES",
+            "scope"      : "support.function.target_link_libraries.cmake",
+            "foreground" : "var( special )"
+        },
+        {
+            "name"       : "CMake TARGET_SOURCES",
+            "scope"      : "support.function.target_sources.cmake",
+            "foreground" : "var( special )"
+        },
+        {
+            "name"       : "CMake UNSET",
+            "scope"      : "support.function.unset.cmake",
+            "foreground" : "var( special )"
+        // },
+        // {
+        //     "name"       : "CMake IF( EXISTS ... )",
+        //     "scope"      : "variable.parameter.if.EXISTS.cmake",
+        //     "foreground" : "var( special )"
+        // },
+        // {
+        //     "name"       : "CMake IF( ... STREQUAL ... )",
+        //     "scope"      : "variable.parameter.if.STREQUAL.cmake",
+        //     "foreground" : "var( special )"
         }
         
         // Notes ///////////////////////////////////////////////////////////////
