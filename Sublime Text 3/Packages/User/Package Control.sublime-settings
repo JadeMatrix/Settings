@@ -7,10 +7,16 @@
 	[
 		"AlignTab",
 		"CMake",
+		"fish",
+		"LLVM",
 		"LSP",
+		"Open Search in a New Tab",
 		"OpenGL Shading Language (GLSL)",
 		"Package Control",
 		"PlainTasks",
-		"PostgreSQL Syntax Highlighting"
+		"PostgreSQL Syntax Highlighting",
+		"Protobuf Syntax Hightlighting",
+		"RPM Spec Syntax",
+		"Theme - SoDaReloaded"
 	]
 }
