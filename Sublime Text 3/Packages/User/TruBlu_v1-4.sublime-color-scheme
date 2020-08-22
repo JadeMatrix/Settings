@@ -204,15 +204,26 @@
             "scope"      : "meta.text-substitution.cmake",
             "foreground" : "var( foreground )"
         },
-        
-        // MATLAB
         {
-            "name"       : "MATLAB line continuation",
-            "scope"      : "punctuation.separator.continuation.matlab",
+            "name"       : "CMake ADD_CUSTOM_COMMAND",
+            "scope"      : "support.function.add_custom_command.cmake",
             "foreground" : "var( special )"
         },
-        
-        // CMake
+        {
+            "name"       : "CMake ADD_CUSTOM_TARGET",
+            "scope"      : "support.function.add_custom_target.cmake",
+            "foreground" : "var( special )"
+        },
+        {
+            "name"       : "CMake ADD_EXECUTABLE",
+            "scope"      : "support.function.add_executable.cmake",
+            "foreground" : "var( special )"
+        },
+        {
+            "name"       : "CMake ADD_LIBRARY",
+            "scope"      : "support.function.add_library.cmake",
+            "foreground" : "var( special )"
+        },
         {
             "name"       : "CMake ADD_SUBDIRECTORY",
             "scope"      : "support.function.add_subdirectory.cmake",
@@ -221,6 +232,11 @@
         {
             "name"       : "CMake CMAKE_MINIMUM_REQUIRED",
             "scope"      : "support.function.cmake_minimum_required.cmake",
+            "foreground" : "var( special )"
+        },
+        {
+            "name"       : "CMake CMAKE_PARSE_ARGUMENTS",
+            "scope"      : "support.function.cmake_parse_arguments.cmake",
             "foreground" : "var( special )"
         },
         {
@@ -234,6 +250,21 @@
             "foreground" : "var( special )"
         },
         {
+            "name"       : "CMake FUNCTION",
+            "scope"      : "support.function.function.cmake",
+            "foreground" : "var( special )"
+        },
+        {
+            "name"       : "CMake GET_FILENAME_COMPONENT",
+            "scope"      : "support.function.get_filename_component.cmake",
+            "foreground" : "var( special )"
+        },
+        {
+            "name"       : "CMake GET_TARGET_PROPERTY",
+            "scope"      : "support.function.get_target_property.cmake",
+            "foreground" : "var( special )"
+        },
+        {
             "name"       : "CMake INSTALL",
             "scope"      : "support.function.install.cmake",
             "foreground" : "var( special )"
@@ -241,6 +272,11 @@
         {
             "name"       : "CMake LIST",
             "scope"      : "support.function.list.cmake",
+            "foreground" : "var( special )"
+        },
+        {
+            "name"       : "CMake MACRO",
+            "scope"      : "support.function.macro.cmake",
             "foreground" : "var( special )"
         },
         {
@@ -274,6 +310,16 @@
             "foreground" : "var( special )"
         },
         {
+            "name"       : "CMake SET_TARGET_PROPERTIES",
+            "scope"      : "support.function.set_target_properties.cmake",
+            "foreground" : "var( special )"
+        },
+        {
+            "name"       : "CMake SOURCE_GROUP",
+            "scope"      : "support.function.source_group.cmake",
+            "foreground" : "var( special )"
+        },
+        {
             "name"       : "CMake STRING",
             "scope"      : "support.function.string.cmake",
             "foreground" : "var( special )"
@@ -302,7 +348,7 @@
             "name"       : "CMake UNSET",
             "scope"      : "support.function.unset.cmake",
             "foreground" : "var( special )"
-        // },
+        },
         // {
         //     "name"       : "CMake IF( EXISTS ... )",
         //     "scope"      : "variable.parameter.if.EXISTS.cmake",
@@ -312,6 +358,13 @@
         //     "name"       : "CMake IF( ... STREQUAL ... )",
         //     "scope"      : "variable.parameter.if.STREQUAL.cmake",
         //     "foreground" : "var( special )"
+        // },
+        
+        // MATLAB
+        {
+            "name"       : "MATLAB line continuation",
+            "scope"      : "punctuation.separator.continuation.matlab",
+            "foreground" : "var( special )"
         }
         
         // Notes ///////////////////////////////////////////////////////////////
