@@ -210,8 +210,8 @@
             "foreground" : "var( special )"
         },
         {
-            "name"       : "CMake conditional operators",
-            "scope"      : "source.cmake variable.parameter.if",
+            "name"       : "CMake function parameter names",
+            "scope"      : "source.cmake variable.parameter",
             "foreground" : "var( special )"
         },
         
