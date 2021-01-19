@@ -1,2 +1,4 @@
 [alias]
     tree = log --oneline --graph
+    refgrep = ! git for-each-ref --format='%(refname:short)' 'refs/**' | grep
+    tgrep = "! f() { git refgrep \"$@\" | xargs git tree; }; f"
