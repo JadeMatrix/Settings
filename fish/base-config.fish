@@ -49,13 +49,6 @@ alias mmake='make -j (numthreads)'
 alias extglob='shopt -s extglob'
 alias hgmt='hg merge -t internal:merge'
 
-switch (uname)
-    case Darwin Linux FreeBSD
-        set CMAKE_GENERATOR 'Ninja Multi-Config'
-        if which cmake &>/dev/null; and which ninja &>/dev/null; and cmake --help | grep $CMAKE_GENERATOR &> /dev/null;
-            set -gx CMAKE_GENERATOR 'Ninja Multi-Config'
-        end
-end
 
 begin
     # MSVC:  /WX /Wall
