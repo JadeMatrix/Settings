@@ -14,7 +14,7 @@ switch (uname)
         function cb
             # xclip is available and can execute (X is running)
             if type -q xclip and xclip -o 2>/dev/null
-                xclip $argv
+                xclip -in $argv
             else
                 tee $argv
             end
