@@ -31,5 +31,7 @@
 	"trim_automatic_white_space": false,
 	"use_tab_stops": true,
 	"word_wrap": false,
-	"wrap_width": 80
+	"wrap_width": 80,
+	"caret_style": "blink"
+	// "caret_blink_interval": 0, // seconds, 0 = "use system setting"
 }
