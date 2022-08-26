@@ -9,6 +9,19 @@ switch (uname)
         alias cb='pbcopy'
         alias numcores='sysctl -n hw.physicalcpu'
         alias numthreads='sysctl -n hw.logicalcpu'
+        
+        # For diff-highlight
+        if test -d "/usr/local/Cellar/"
+            set git_version_string ( \
+                git --version | \
+                string match --regex '\d+\.\d+\.\d+' \
+            )
+            if test -d "/usr/local/Cellar/git/$git_version_string/"
+                set -x PATH \
+                    $PATH \
+                    "/usr/local/Cellar/git/$git_version_string/share/git-core/contrib/diff-highlight/"
+            end
+        end
     
     case Linux
         function cb
@@ -26,6 +39,18 @@ switch (uname)
         end
         # alias numthreads='grep -c ^processor /proc/cpuinfo'
         alias numthreads='nproc'
+        
+        # For diff-highlight
+        if test -e '/etc/redhat-release'
+            set git_version_string ( \
+                git --version | \
+                string match --regex '\d+\.\d+' | \
+                string replace '.' '' \
+            )
+            set -x PATH \
+                $PATH \
+                "/opt/rh/rh-git$git_version_string/root/usr/share/git-core/contrib/"
+        end
     
     case FreeBSD
         alias cb='tee'

@@ -4,3 +4,4 @@
     graph = log --oneline --graph
     refgrep = ! git for-each-ref --format='%(refname:short)' 'refs/**' | grep
     ggrep = "! f() { git refgrep \"$@\" | xargs git graph; }; f"
+    ldiff = "! f() { git diff --color=always \"$@\" | diff-highlight | less -SRFX; }; f"
