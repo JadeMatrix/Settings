@@ -6,8 +6,10 @@
 	"installed_packages":
 	[
 		"AlignTab",
+		"Cap'n Proto Syntax",
 		"CMake",
 		"fish",
+		"HLSL Syntax",
 		"LLVM",
 		"LSP",
 		"Open Search in a New Tab",
