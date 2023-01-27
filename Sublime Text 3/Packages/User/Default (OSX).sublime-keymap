@@ -10,6 +10,8 @@
         }
     },
     
+    { "keys": ["super+shift+forward_slash"], "command": "toggle_comment", "args": { "block": true } },
+    
     { "keys" : [ "super+r" ], "command" : "lsp_symbol_references" },
     { "keys" : [ "super+alt+down"] , "command" : "lsp_symbol_definition" },
     // { "keys": ["super+alt+shift+down"], "command": "goto_reference" },
