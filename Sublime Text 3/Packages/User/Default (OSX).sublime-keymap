@@ -9,8 +9,8 @@
             "toggle" : true
         }
     },
-    
-    { "keys": ["super+shift+forward_slash"], "command": "toggle_comment", "args": { "block": true } },
+    { "keys": [ "super+shift+forward_slash" ], "command": "toggle_comment", "args": { "block": true } },
+    { "keys": [ "super+shift+m" ], "command": "mark_and_move_do_it_all" },
     
     { "keys" : [ "super+r" ], "command" : "lsp_symbol_references" },
     { "keys" : [ "super+alt+down"] , "command" : "lsp_symbol_definition" },

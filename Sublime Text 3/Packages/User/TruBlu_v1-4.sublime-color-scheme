@@ -220,6 +220,13 @@
             "name"       : "MATLAB line continuation",
             "scope"      : "punctuation.separator.continuation.matlab",
             "foreground" : "var( special )"
+        },
+        
+        // Groovy
+        {
+            "name"       : "Groovy string-embedded source",
+            "scope"      : "source.groovy.embedded.source",
+            "foreground" : "var( foreground )"
         }
         
         // Notes ///////////////////////////////////////////////////////////////

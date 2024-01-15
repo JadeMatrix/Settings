@@ -1,6 +1,7 @@
 {
 	"always_show_minimap_viewport": true,
 	"auto_indent": true,
+	"caret_style": "blink",
 	"close_windows_when_empty": false,
 	"color_scheme": "Packages/User/TruBlu_v1-4.sublime-color-scheme",
 	"detect_indentation": true,
@@ -10,9 +11,7 @@
 	"font_size": 11,
 	"ignored_packages":
 	[
-		"ApacheConf.tmLanguage",
-		"Dockerfile Syntax Highlighting",
-		"Vintage"
+		"Vintage",
 	],
 	"indent_to_bracket": false,
 	"mouse_wheel_switches_tabs": false,
@@ -32,6 +31,5 @@
 	"use_tab_stops": true,
 	"word_wrap": false,
 	"wrap_width": 80,
-	"caret_style": "blink"
-	// "caret_blink_interval": 0, // seconds, 0 = "use system setting"
+	"index_files": true,
 }

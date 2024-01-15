@@ -11,5 +11,14 @@
     },
     { "keys" : [ "ctrl+shift+o" ], "command" : "prompt_open_folder" },
     { "keys" : [ "alt+enter" ], "command" : "next_result" },
-    { "keys" : [ "shift+alt+enter" ], "command" : "pref_result" }
+    { "keys" : [ "shift+alt+enter" ], "command" : "pref_result" },
+    { "keys" : [ "ctrl+shift+m" ], "command" : "mark_and_move_do_it_all" },
+    { "keys" : [ "ctrl+alt+s" ], "command" : "reveal_in_side_bar" },
+
+    { "keys": ["ctrl+shift+pagedown"], "command": "noop" },
+    { "keys": ["ctrl+shift+pageup"], "command": "noop" },
+    // Disable font size shortcuts
+    { "keys": ["ctrl++"], "command": "noop" },
+    { "keys": ["ctrl+="], "command": "noop" },
+    { "keys": ["ctrl+-"], "command": "noop" }
 ]
